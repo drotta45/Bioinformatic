@@ -1,0 +1,30 @@
+fasta_path = '/content/rosalind_gc.txt'
+
+def rosalind_fasta_to_dict(fasta_path):
+  with open(fasta_path, 'r') as file:
+    seq_list = file.read()
+    seq_list = seq_list.split('>')
+    seq_list = seq_list[1:]
+    seq_list = [seq.replace('\n', '') for seq in seq_list]
+    seq_dict = {seq[:13] : seq[13:] for seq in seq_list}
+    return seq_dict
+
+def gc_content(seq):
+  g_content = seq.count('G')
+  c_content = seq.count('C')
+  gc_content = g_content + c_content
+  return gc_content / len(seq) * 100
+  
+ 
+ def find_max_gc_content(seq_dict):
+  content_dict = {}
+  for key, value in seq_dict.items():
+    content_dict[key] = gc_content(value)
+  sorted_values = sorted(content_dict.values())
+  for key, value in content_dict.items():
+    if value == sorted_values[-1]:
+      return key, content_dict[key]
+      
+
+Answer:
+('Rosalind_3099', 50.97613882863341)
